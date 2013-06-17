@@ -8,14 +8,13 @@ Gem::Specification.new do |spec|
   spec.version       = LegacyMailers::VERSION
   spec.authors       = ["Mick Staugaard"]
   spec.email         = ["mick@staugaard.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = "Brings back the legacy ActionMailer 2.3 API to ActionMailer 3.x"
+  spec.summary       = "This is only meant to help you when migration to Rails 3.2"
+  spec.homepage      = "https://github.com/staugaard/legacy_mailers"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.files         = Dir.glob("lib/**/*") + %w(README.md)
+  spec.test_files    = Dir.glob("test/**/*")
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.3"
