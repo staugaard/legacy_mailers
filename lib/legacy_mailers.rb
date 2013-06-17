@@ -1,5 +1,6 @@
 require "legacy_mailers/version"
 
+require 'action_mailer/tmail_compat'
 require 'action_mailer/adv_attr_accessor'
 require 'action_mailer/old_api'
 require 'action_mailer/deprecated_api'
