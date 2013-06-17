@@ -1,0 +1,4 @@
+gemfile:
+  - gemfiles/actionmailer_3.0.gemfile
+  - gemfiles/actionmailer_3.1.gemfile
+  - gemfiles/actionmailer_3.2.gemfile

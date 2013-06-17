@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "mocha"
   spec.add_development_dependency "debugger"
+  spec.add_development_dependency "appraisal", "~> 0.5"
 
-  spec.add_dependency "actionmailer", "~> 3.2.0"
+  spec.add_dependency "actionmailer", "~> 3.0"
 end

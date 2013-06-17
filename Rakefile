@@ -2,6 +2,7 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/packagetask'
 require 'rubygems/package_task'
+require 'appraisal'
 
 desc "Default Task"
 task :default => [ :test ]

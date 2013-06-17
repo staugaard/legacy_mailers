@@ -715,7 +715,11 @@ The=3Dbody
 EOF
     mail = Mail.new(msg)
     assert_equal "The=body", mail.body.to_s.strip
-    assert_equal "The=3Dbody", mail.body.encoded.strip
+    if ActionMailer::VERSION::MINOR > 1
+      assert_equal "The=3Dbody", mail.body.encoded.strip
+    else
+      assert_equal "The=3Dbody=", mail.body.encoded.strip
+    end
   end
 
   def test_unquote_base64_body
@@ -993,7 +997,11 @@ EOF
     mail = Mail.new(fixture)
     assert_equal(2, mail.parts.length)
     assert_equal(4, mail.parts.first.parts.length)
-    assert_equal("This is the first part.\n", mail.parts.first.parts.first.body.to_s)
+    if ActionMailer::VERSION::MINOR > 1
+      assert_equal("This is the first part.\n", mail.parts.first.parts.first.body.to_s)
+    else
+      assert_equal("This is the first part.", mail.parts.first.parts.first.body.to_s)
+    end
     assert_equal("test.rb", mail.parts.first.parts.second.filename)
     assert_equal("flowed", mail.parts.first.parts.fourth.content_type_parameters[:format])
     assert_equal('smime.p7s', mail.parts.second.filename)
