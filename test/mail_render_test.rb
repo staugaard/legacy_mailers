@@ -43,7 +43,7 @@ class RenderMailer < ActionMailer::Base
 
   def initialize_defaults(method_name)
     super
-    mailer_name "test_mailer"
+    self.class.mailer_name = "test_mailer"
   end
 
   def multipart_alternative
@@ -113,11 +113,6 @@ class RenderHelperTest < Test::Unit::TestCase
   def test_file_template
     mail = RenderMailer.file_template
     assert_equal "Hello there,\n\nMr. test@localhost", mail.body.to_s.strip
-  end
-
-  def test_rxml_template
-    mail = RenderMailer.rxml_template.deliver
-    assert_equal %(<?xml version="1.0" encoding="UTF-8"?>\n<test/>), mail.body.to_s.strip
   end
 
   def test_included_subtemplate

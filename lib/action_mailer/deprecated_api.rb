@@ -23,6 +23,11 @@ module ActionMailer
           @@default_#{method} = nil
         FILE
       end
+
+      class << self
+        alias_method_chain :respond_to?, :deprecated_api
+        alias_method_chain :method_missing, :deprecated_api
+      end
     end
 
     module ClassMethods
@@ -53,11 +58,11 @@ module ActionMailer
         self.view_paths = ActionView::Base.process_view_paths(root)
       end
 
-      def respond_to?(method_symbol, include_private = false)
-        matches_dynamic_method?(method_symbol) || super
+      def respond_to_with_deprecated_api?(method_symbol, include_private = false)
+        matches_dynamic_method?(method_symbol) || respond_to_without_deprecated_api?(method_symbol, false)
       end
 
-      def method_missing(method_symbol, *parameters)
+      def method_missing_with_deprecated_api(method_symbol, *parameters)
         if match = matches_dynamic_method?(method_symbol)
           case match[1]
             when 'create'
@@ -68,10 +73,10 @@ module ActionMailer
               ActiveSupport::Deprecation.warn "#{self}.deliver_#{match[2]} is deprecated, " <<
                 "use #{self}.#{match[2]}.deliver instead", caller[0,2]
               new(match[2], *parameters).message.deliver
-            else super
+            else method_missing_without_deprecated_api(method_symbol, *parameters)
           end
         else
-          super
+          method_missing_without_deprecated_api(method_symbol, *parameters)
         end
       end
 

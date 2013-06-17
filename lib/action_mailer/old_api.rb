@@ -58,16 +58,19 @@ module ActionMailer
       # specifies the variables to pass to the template when it is rendered),
       # or a string, in which case it specifies the actual text of the message.
       adv_attr_accessor :body
-    end
 
-    def process(method_name, *args)
-      initialize_defaults(method_name)
-      super
-      unless @mail_was_called
-        create_parts
-        create_mail
+      def process(method_name, *args)
+        lookup_context.skip_default_locale!
+
+        initialize_defaults(method_name)
+        super
+
+        unless @mail_was_called
+          create_parts
+          create_mail
+        end
+        @_message
       end
-      @_message
     end
 
     # Add a part to a multipart message, with the given content-type. The
